@@ -11,16 +11,71 @@ function addProduct(e) {
     const li = document.createElement('li');
     li.textContent = `${name} - $${price.toFixed(2)}`;
 
+    // Crear botón de editar
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Editar';
+    editButton.classList.add('edit-button');
+    editButton.addEventListener('click', () => editProduct(li, name, price));
+
+    li.appendChild(editButton);
     document.getElementById('list').appendChild(li);
     document.getElementById('total').textContent = total.toFixed(2);
 
     document.getElementById('product-form').reset();
 }
 
-document.getElementById('export-pdf').addEventListener('click', exportToPDF);
-document.getElementById('export-image').addEventListener('click', exportToImage);
-document.getElementById('share-email').addEventListener('click', shareByEmail);
-document.getElementById('share-whatsapp').addEventListener('click', shareByWhatsApp);
+function editProduct(li, name, price) {
+    const newName = prompt('Nuevo nombre del producto:', name);
+    const newPrice = parseFloat(prompt('Nuevo precio del producto:', price));
+
+    if (newName && !isNaN(newPrice)) {
+        total -= price;
+        total += newPrice;
+
+        li.textContent = `${newName} - $${newPrice.toFixed(2)}`;
+
+        // Volver a agregar el botón de editar
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Editar';
+        editButton.classList.add('edit-button');
+        editButton.addEventListener('click', () => editProduct(li, newName, newPrice));
+
+        li.appendChild(editButton);
+        document.getElementById('total').textContent = total.toFixed(2);
+    }
+}
+
+function hideEditButtons() {
+    document.querySelectorAll('.edit-button').forEach(button => button.style.display = 'none');
+}
+
+function showEditButtons() {
+    document.querySelectorAll('.edit-button').forEach(button => button.style.display = 'inline');
+}
+
+document.getElementById('export-pdf').addEventListener('click', () => {
+    hideEditButtons();
+    exportToPDF();
+    showEditButtons();
+});
+
+document.getElementById('export-image').addEventListener('click', () => {
+    hideEditButtons();
+    exportToImage();
+    showEditButtons();
+});
+
+document.getElementById('share-email').addEventListener('click', () => {
+    hideEditButtons();
+    shareByEmail();
+    showEditButtons();
+});
+
+document.getElementById('share-whatsapp').addEventListener('click', () => {
+    hideEditButtons();
+    shareByWhatsApp();
+    showEditButtons();
+});
 
 function exportToPDF() {
     html2canvas(document.querySelector('#product-list-container')).then(canvas => {
