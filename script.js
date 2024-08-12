@@ -17,7 +17,14 @@ function addProduct(e) {
     editButton.classList.add('edit-button');
     editButton.addEventListener('click', () => editProduct(li, name, price));
 
+    // Crear botón de eliminar
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Eliminar';
+    deleteButton.classList.add('delete-button');
+    deleteButton.addEventListener('click', () => deleteProduct(li, price));
+
     li.appendChild(editButton);
+    li.appendChild(deleteButton);
     document.getElementById('list').appendChild(li);
     document.getElementById('total').textContent = total.toFixed(2);
 
@@ -34,23 +41,37 @@ function editProduct(li, name, price) {
 
         li.textContent = `${newName} - $${newPrice.toFixed(2)}`;
 
-        // Volver a agregar el botón de editar
+        // Volver a agregar los botones de editar y eliminar
         const editButton = document.createElement('button');
         editButton.textContent = 'Editar';
         editButton.classList.add('edit-button');
         editButton.addEventListener('click', () => editProduct(li, newName, newPrice));
 
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.classList.add('delete-button');
+        deleteButton.addEventListener('click', () => deleteProduct(li, newPrice));
+
         li.appendChild(editButton);
+        li.appendChild(deleteButton);
         document.getElementById('total').textContent = total.toFixed(2);
     }
 }
 
+function deleteProduct(li, price) {
+    total -= price;
+    document.getElementById('list').removeChild(li);
+    document.getElementById('total').textContent = total.toFixed(2);
+}
+
 function hideEditButtons() {
     document.querySelectorAll('.edit-button').forEach(button => button.style.display = 'none');
+    document.querySelectorAll('.delete-button').forEach(button => button.style.display = 'none');
 }
 
 function showEditButtons() {
     document.querySelectorAll('.edit-button').forEach(button => button.style.display = 'inline');
+    document.querySelectorAll('.delete-button').forEach(button => button.style.display = 'inline');
 }
 
 document.getElementById('export-pdf').addEventListener('click', () => {
@@ -116,4 +137,3 @@ function getListText() {
     listText += "Total: $" + total.toFixed(2);
     return listText;
 }
-
