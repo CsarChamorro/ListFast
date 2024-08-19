@@ -5,11 +5,18 @@ function addProduct(e) {
     e.preventDefault();
 
     const name = document.getElementById('product-name').value;
-    const price = parseFloat(document.getElementById('product-price').value);
+    const priceInput = document.getElementById('product-price').value;
+    const price = parseFloat(priceInput.replace(',', '.'));
+
+    if (isNaN(price) || price <= 0) {
+        alert('Introduce un precio válido.');
+        return;
+    }
+
     total += price;
 
     const li = document.createElement('li');
-    li.textContent = `${name} - $${price.toFixed(2)}`;
+    li.textContent = `${name} - $${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     // Crear botón de editar
     const editButton = document.createElement('button');
@@ -26,20 +33,21 @@ function addProduct(e) {
     li.appendChild(editButton);
     li.appendChild(deleteButton);
     document.getElementById('list').appendChild(li);
-    document.getElementById('total').textContent = total.toFixed(2);
+    document.getElementById('total').textContent = total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     document.getElementById('product-form').reset();
 }
 
 function editProduct(li, name, price) {
     const newName = prompt('Nuevo nombre del producto:', name);
-    const newPrice = parseFloat(prompt('Nuevo precio del producto:', price));
+    const newPriceInput = prompt('Nuevo precio del producto:', price);
+    const newPrice = parseFloat(newPriceInput.replace(',', '.'));
 
-    if (newName && !isNaN(newPrice)) {
+    if (newName && !isNaN(newPrice) && newPrice > 0) {
         total -= price;
         total += newPrice;
 
-        li.textContent = `${newName} - $${newPrice.toFixed(2)}`;
+        li.textContent = `${newName} - $${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
         // Volver a agregar los botones de editar y eliminar
         const editButton = document.createElement('button');
@@ -54,14 +62,16 @@ function editProduct(li, name, price) {
 
         li.appendChild(editButton);
         li.appendChild(deleteButton);
-        document.getElementById('total').textContent = total.toFixed(2);
+        document.getElementById('total').textContent = total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } else {
+        alert('Introduce un precio válido.');
     }
 }
 
 function deleteProduct(li, price) {
     total -= price;
     document.getElementById('list').removeChild(li);
-    document.getElementById('total').textContent = total.toFixed(2);
+    document.getElementById('total').textContent = total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function hideEditButtons() {
@@ -132,8 +142,9 @@ function getListText() {
     let listText = "";
     const items = document.querySelectorAll('#list li');
     items.forEach(item => {
-        listText += item.textContent + "\n";
+        const text = item.firstChild.textContent; // Obtener solo el texto del producto y el precio
+        listText += text + "\n";
     });
-    listText += "Total: $" + total.toFixed(2);
+    listText += "Total: $" + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     return listText;
 }

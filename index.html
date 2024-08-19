@@ -11,7 +11,7 @@
         <h1>Lista de Compras</h1>
         <form id="product-form" autocomplete="off">
             <input type="text" id="product-name" placeholder="Nombre del producto" required autocomplete="off">
-            <input type="number" id="product-price" placeholder="Precio" required autocomplete="off">
+            <input type="text" id="product-price" placeholder="Precio" required pattern="^\d+(\.\d{1,2})?$" title="Introduce un número válido, con hasta dos decimales.">
             <button type="submit">Agregar</button>
         </form>
         <div id="product-list-container">
