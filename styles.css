@@ -1,29 +1,33 @@
 body {
+    
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .container {
-    background: #fff;
-    padding: 20px;
+    
+    text-align: center;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    max-width: 500px;
-    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
+    width: 600px;
+    
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    
+    
+    margin: auto 10%;
+    height: 200px;
+    width: 500px;
+    align-content: center;
 }
 
 input {
     padding: 10px;
     font-size: 16px;
+    margin: 2%;
+    width: 400px;
 }
 
 button {
@@ -34,6 +38,8 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    margin: 2%;
+    width: 200px;
 }
 
 button:hover {
@@ -43,6 +49,7 @@ button:hover {
 #product-list {
     margin-top: 20px;
     text-align: left;
+    margin-left: 30px;
 }
 
 ul {
@@ -52,7 +59,7 @@ ul {
 
 li {
     padding: 10px;
-    background: #f9f9f9;
+    
     margin-bottom: 10px;
     border-radius: 5px;
     display: flex;
@@ -61,6 +68,5 @@ li {
 
 #share-whatsapp {
     background-color: #349c04;
-    margin-block-start: 4%;
-    margin-right: 6%;
+    
 }
