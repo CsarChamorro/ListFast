@@ -34,7 +34,7 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    margin: 0%;
+    margin: 2%;
 }
 
 button:hover {
@@ -44,7 +44,7 @@ button:hover {
 #product-list {
     margin-top: 20px;
     text-align: left;
-    margin-left: 2%;
+    margin-left: 1%;
 }
 
 ul {
